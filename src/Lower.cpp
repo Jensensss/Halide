@@ -121,7 +121,7 @@ Module lower(const vector<Function> &output_funcs, const string &pipeline_name, 
     debug(1) << "Creating initial loop nests...\n";
     bool any_memoized = false;
     Stmt s = schedule_functions(outputs, fused_groups, env, t, any_memoized);
-    debug(2) << "Lowering after creating initial loop nests:\n" << s << '\n';
+    debug(0) << "Lowering after creating initial loop nests:\n" << s << '\n';
 
     debug(1) << "Canonicalizing GPU var names...\n";
     s = canonicalize_gpu_vars(s);
@@ -159,7 +159,7 @@ Module lower(const vector<Function> &output_funcs, const string &pipeline_name, 
     // can still simplify Exprs).
     debug(1) << "Performing computation bounds inference...\n";
     s = bounds_inference(s, outputs, order, fused_groups, env, func_bounds, t);
-    debug(2) << "Lowering after computation bounds inference:\n" << s << '\n';
+    debug(0) << "Lowering after computation bounds inference:\n" << s << '\n';
 
     debug(1) << "Performing sliding window optimization...\n";
     s = sliding_window(s, env);
@@ -167,7 +167,7 @@ Module lower(const vector<Function> &output_funcs, const string &pipeline_name, 
 
     debug(1) << "Performing allocation bounds inference...\n";
     s = allocation_bounds_inference(s, env, func_bounds);
-    debug(2) << "Lowering after allocation bounds inference:\n" << s << '\n';
+    debug(0) << "Lowering after allocation bounds inference:\n" << s << '\n';
 
     debug(1) << "Removing code that depends on undef values...\n";
     s = remove_undef(s);
